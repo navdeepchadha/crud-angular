@@ -1,0 +1,252 @@
+@import "../../../styles.sass"
+
+.login-component
+  .side-image
+    background: url(#{$loginAssetPath}/login-background.jpeg) no-repeat
+    min-height: 100vh
+    width: 100vw
+    background-size: 100% 100%
+  .login-section
+    padding-left: 2.7%
+    // padding-top: 10%
+    .login-form-section
+      width: 75%
+      padding-top: 25%
+      h3, h5
+        margin-bottom: 0
+        padding-bottom: 24px
+      .login-form
+        padding-top: 60px
+        .form-group
+          margin-bottom: 0
+          .error-div
+            right: 0
+            .error-line
+              line-height: 1.2
+          .form-control
+            border-radius: 0
+            height: 60px
+            padding-top: 20px
+            &:focus
+              border-color: #d2d2d2!important
+              box-shadow: none!important
+              border-left-color: $lightaquamarine!important
+              border-left-width: 5px!important
+            &.email
+              border-bottom: none
+            &.password
+              // margin-bottom: 24px
+            &.forgot-email
+              margin-bottom: 0
+            &.error-input
+              border: 1px solid $darkred!important
+              color: $darkred
+            &::placeholder
+              font-size: 14px
+              color: $darkGray
+              font-family: $sourceSansSemiBold
+          .form-password-section
+            margin-bottom: 24px
+          .form-control-placeholder
+            position: absolute
+            top: 0px
+            padding: 7px 0 0 13px
+            transition: all 200ms
+            color: $darkGray
+            font-size: 12px //14
+            font-family: $sourceSansRegular
+            width: 98%
+          // .form-control:focus + .form-control-placeholder,.form-control:valid + .form-control-placeholder
+          //   font-size: 12px
+          //   transform: translate3d(0, -70%, 0)
+          //   font-family: $sourceSansRegular
+        .login-progress-btn
+          margin-top: 60px
+          margin-bottom: 42px
+          width: 210px
+          height: 50px
+          border-radius: 6px
+          box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 2px 0 3px 0 rgba(0, 0, 0, 0.2)
+          border-color: transparent
+          position: relative
+          transition: all 0.4s ease
+          &:active
+            background-color: rgba(72, 160, 71, 0.8)!important
+          &:disabled
+            opacity: 0.5
+          &.submit-disable
+            opacity: 1!important
+            background-color: rgba(72, 160, 71, 0.5)!important
+            pointer-events: none
+            touch-action: none
+          &.active
+            .progress
+              opacity: 1
+              animation: progress-anim 3s ease 0s
+          &.login-progress-btn[data-progress-style='fill-back']
+            .progress
+              position: absolute
+              left: 0
+              top: 0
+              right: 0
+              bottom: 0
+          .btn-prg
+            position: absolute
+            left: 0
+            top: 0
+            right: 0
+            bottom: 0
+            line-height: 50px
+            text-align: center
+            z-index: 10
+            opacity: 1
+          .progress
+            width: 0%
+            height: auto
+            z-index: 5
+            background: #81c784
+            opacity: 0
+            transition: all 0.3s ease
+        .login-btn
+          margin-top: 60px
+          margin-bottom: 42px
+          width: 210px
+          border-radius: 6px
+          box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 2px 0 3px 0 rgba(0, 0, 0, 0.2)
+          border-color: transparent
+          position: relative
+          transition: all 0.4s ease
+          &:disabled
+            opacity: 0.5
+          &.submit-disable
+            opacity: 1!important
+            background-color: rgba(72, 160, 71, 0.5)!important
+            pointer-events: none
+            touch-action: none
+          &.active
+            .progress
+              opacity: 1
+              animation: progress-anim 10s ease 0s
+          &.login-btn[data-progress-style='fill-back']
+            .progress
+              position: absolute
+              left: 0
+              top: 0
+              right: 0
+              bottom: 0
+          .progress
+            width: 0%
+            height: inherit
+            z-index: 5
+            background: #81c784
+            opacity: 0
+            transition: all 0.3s ease
+          .progress-login
+            // background-color: red
+            .progress-inner
+                width: 0%
+                opacity: 0.6
+                transition: width 0.3s, opacity 0.6s
+                position: absolute
+                bottom: 0
+                left: 0
+                height: 100%
+                border-radius: 6px
+                background-color: $oceanBluePearl
+        .progress-btn
+          position: relative
+          width: 210px
+          height: 50px
+          transition: all 0.4s ease
+          margin-top: 60px
+          margin-bottom: 42px
+          border-radius: 6px
+          box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 2px 0 3px 0 rgba(0, 0, 0, 0.2)
+          &.active
+            .progress
+              opacity: 1
+              animation: progress-anim 10s ease 0s
+          &.progress-btn[data-progress-style='fill-back']
+            .progress
+              position: absolute
+              left: 0
+              top: 0
+              right: 0
+              bottom: 0
+          .btn-prg
+            position: absolute
+            left: 0
+            top: 0
+            right: 0
+            bottom: 0
+            line-height: 50px
+            text-align: center
+            z-index: 10
+            opacity: 1
+          .progress
+            width: 0%
+            height: inherit
+            z-index: 5
+            background: #81c784
+            opacity: 0
+            transition: all 0.3s ease
+      &.forget-password-section
+        padding-top: 5%
+        .back-page-button
+          margin-bottom: 48px
+          padding-bottom: 0
+        .login-btn
+          margin-top: 48px!important
+
+.login-toast
+  position: fixed
+  left: 0
+  right: 0
+  margin-left: auto
+  margin-right: auto
+  z-index: 9999
+  border-radius: 8px
+  background-color: $lightGreenCyan
+  top: -6px
+  max-width: 570px
+  text-align: center
+
+@media only screen and (max-width: 767px)
+  .login-component
+    .side-image
+      display: none
+    .login-form-section
+      width: 100%!important
+      .login-form
+        .login-btn
+          width: 100%!important
+        .login-progress-btn
+          width: 100%!important
+        .progress-btn
+          width: 100%!important
+        .error-line
+          padding-top: 5px
+          line-height: 1.1!important
+        .form-password-section
+          margin-bottom: 30px!important
+  .login-toast
+    max-width: 290px!important
+    text-align: left!important
+
+@keyframes progress-anim
+  0%
+    width: 0%
+  5%
+    width: 0%
+  10%
+    width: 15%
+  30%
+    width: 40%
+  50%
+    width: 55%
+  80%
+    width: 95%
+  95%
+    width: 100%
+  100%
+    width: 0%

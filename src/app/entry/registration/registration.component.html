@@ -1,0 +1,84 @@
+<div class="login-form">
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" autocomplete="off" novalidate>
+    <div class="form-group position-relative">
+      <input type="text" name="firstname" placeholder="Enter First Name" [(ngModel)]="registrationObj['firstName']"
+        id="inputfirstname" aria-describedby="emailHelp"
+        class="form-control lightsilver-border forgot-email fs-16 semi-bold" autocomplete="off" #nameFirst="ngModel"
+        required>
+      <label class="form-control-placeholder" for="inputfirstname">First Name</label>
+    </div>
+    <div class="form-group position-relative">
+      <input type="text" name="lastname" placeholder="Enter Last Name" [(ngModel)]="registrationObj['lastName']"
+        id="inputlastname" aria-describedby="emailHelp"
+        class="form-control lightsilver-border forgot-email fs-16 semi-bold" autocomplete="off" #nameLast="ngModel"
+        required>
+      <label class="form-control-placeholder" for="inputlastname">Last Name</label>
+    </div>
+    <div class="form-group position-relative">
+      <input type="email" name="email" [(ngModel)]="registrationObj['email']" placeholder="Enter Email Address"
+        id="InputEmail" aria-describedby="emailHelp" class="form-control lightsilver-border email fs-16 semi-bold"
+        autocomplete="off" #emaillogin="ngModel" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" required
+        [ngClass]="{'error-input': emaillogin.errors?.pattern || errorMsgUsername}">
+      <label class="form-control-placeholder d-flex justify-content-between" for="InputEmail"><span>Email
+          Address</span>
+          <span class="error fs-12 semi-bold dark-red"
+          *ngIf="emaillogin.errors?.pattern && !errorMsgUsername">Invalid Email
+          id.</span>
+          <span class="error fs-12 semi-bold dark-red"
+          *ngIf="!emaillogin.errors?.pattern && errorMsgUsername">{{errorMsgUsername}}</span></label>
+    </div>
+    <div class="form-group position-relative country-dropdown">
+      <input type="text" name="country" [(ngModel)]="registrationObj['country']" placeholder="Enter Country"
+        id="InputCountry" aria-describedby="emailHelp" class="form-control lightsilver-border email fs-16 semi-bold"
+        autocomplete="off" [ngbTypeahead]="search" (focus)="focus$.next($any($event).target.value)"
+        (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead">
+      <label class="form-control-placeholder" for="InputCountry">Country</label>
+    </div>
+
+    <div class="form-group position-relative">
+      <input type="text" name="phoneNo" [(ngModel)]="registrationObj['phNumber']" placeholder="Enter Phone Number"
+        minlength="3" id="InputPhoneNumber" aria-describedby="emailHelp"
+        class="form-control lightsilver-border email fs-16 semi-bold" autocomplete="off" #phoneNumber="ngModel" required
+        oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')">
+      <label class="form-control-placeholder" for="InputPhoneNumber">Phone Number</label>
+    </div>
+
+    <div class="form-group position-relative">
+      <input type="password" name="password" placeholder="New Password should be of Minimum 8 Characters"
+        [(ngModel)]="registrationObj['newPassword']" id="inputpassword" aria-describedby="emailHelp"
+        class="form-control lightsilver-border password fs-16 semi-bold" autocomplete="off" minlength="8"
+        #newpasswordlogin="ngModel"
+        (ngModelChange)="checkPassword(registrationObj['newPassword'],registrationObj['confirmPassword'])? errorMsg='': ''"
+        required [ngClass]="{'error-input':registrationObj['confirmPassword'] && ifPasswordNotSame}">
+      <!-- [ngClass]="{'error-input': passwordlogin.errors?.minlength}"> -->
+      <label class="form-control-placeholder" for="inputpassword">New Password</label>
+    </div>
+
+    <div class="form-group position-relative">
+      <div class="form-password-section">
+        <input [ngClass]="{'error-input':registrationObj['confirmPassword'] && ifPasswordNotSame}" type="password"
+          name="password" placeholder="Current Password should be same as New Password"
+          [(ngModel)]="registrationObj['confirmPassword']" id="inputconfirmpassword" aria-describedby="emailHelp"
+          class="form-control lightsilver-border password fs-16 semi-bold" autocomplete="off" minlength="8"
+          #passwordlogin="ngModel"
+          (ngModelChange)="checkPassword(registrationObj['newPassword'],registrationObj['confirmPassword'])? errorMsg='': ''"
+          required>
+        <!-- [ngClass]="{'error-input': passwordlogin.errors?.minlength}"> -->
+        <label class="form-control-placeholder d-flex justify-content-between" for="inputconfirmpassword"><span>Confirm
+            Password</span><span *ngIf="registrationObj['confirmPassword'] && ifPasswordNotSame"
+            class="error fs-12 semi-bold dark-red">
+            Passwords do not match.
+          </span></label>
+      </div>
+    </div>
+
+    <button id="progress-forget-btn" type="submit"
+      class="btn btn-primary login-progress-btn fs-16 bold background-green hand-pointer"
+      [disabled]='!registerForm.valid || verifyForm() || onSuccessSubmit || ifPasswordNotSame'
+      [ngClass]="{'submit-disable not-allowed': onSuccessSubmit,'not-allowed':!registerForm.valid || verifyForm() || ifPasswordNotSame}"
+      data-progress-style="fill-back">
+      <div class="btn-prg text-white fs-16 bold" [ngClass]="{'opacity-5': onSuccessSubmit}">Register</div>
+      <div class="progress"></div>
+    </button>
+  </form>
+</div>

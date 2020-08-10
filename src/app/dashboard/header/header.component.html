@@ -1,0 +1,15 @@
+<div
+  class="dashboard-header position-fixed w-100 pl-3 pr-3 d-flex align-items-center bg-white  justify-content-between">
+  <h3 class="extra-bold fs-22 m-0 hand-pointer" (click)="routeToDashboard()">Welcome {{loggedInUser | titlecase}}</h3>
+
+  <div ngbDropdown class="d-inline-block profile">
+    <div class="profile-icon" id="dropdownBasic1" ngbDropdownToggle>
+      <img [src]="profileImageURL" alt="">
+    </div>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button (click)="deleteAccount()" ngbDropdownItem>Delete Account</button>
+      <button class="light-black" (click)="goToLoginPage()" ngbDropdownItem>Logout</button>
+    </div>
+  </div>
+
+</div>

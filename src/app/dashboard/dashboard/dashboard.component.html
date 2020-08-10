@@ -1,0 +1,128 @@
+<app-header [loggedInUser]="profile_name" [loggedInId]="userId" [profileImageURL]="profileImg"></app-header>
+
+
+<div class="dashboard-section">
+  <div class="profile-details-container p-3 bg-white">
+    <form class="profile-detail-form" #profileDetailsForm="ngForm"
+      (ngSubmit)="updateProfileRequest($event,profileDetailsForm,profile_name,profile_email,country)">
+
+      <!-- Profile Image -->
+      <div class="form-group profile-picture position-relative">
+        <div class="row">
+          <div class="col-5 text-right">
+            <img class="user-profile-image" [src]="profileImg" alt="">
+          </div>
+          <div class="col-7">
+            <p class="semi-bold fs-14 dark-gray">Profile Picture</p>
+            <input type="file" style="display: none" type="file" (change)="onFileUpload($event)"
+              accept="image/x-png,image/jpg,image/jpeg" #selectFile>
+            <button type="button" class="upload-picture semi-bold fs-14 dark-gray background-white"
+              (click)="$event.preventDefault();selectFile.click()" [disabled]='onImageSelect'>Upload
+              Picture</button>
+          </div>
+        </div>
+      </div>
+
+      <!--First name -->
+      <div class="form-group position-relative">
+        <input class="change-password form-control regular fs-16 light-black" id="first-name"
+          [ngClass]="{'error-input': profileName.errors?.minlength}" type="text" placeholder="Ex. John Doe"
+          name="profileName" autocomplete="off" minlength="3" maxlength="30" #profileName="ngModel"
+          [(ngModel)]="profile_name" (ngModelChange)="onSuccessSubmit = false" required />
+        <label class="form-control-placeholder semi-bold fs-12" for="first-name">First Name</label>
+        <div class="error-div text-right position-absolute"
+          *ngIf="(profileName.invalid && (profileName.dirty || profileName.touched))">
+          <label class="error fs-12 semi-bold" *ngIf="profileName.errors?.minlength">Name should be of Minimum 3
+            Characters and Maximum 30 Characters.</label>
+        </div>
+      </div>
+
+      <!-- Last name -->
+      <div class="form-group position-relative">
+        <input class="change-password form-control regular fs-16 light-black" id="last-name"
+          [ngClass]="{'error-input': lastName.errors?.minlength}" type="text" placeholder="Ex. John Doe" name="lastName"
+          autocomplete="off" minlength="3" maxlength="30" #lastName="ngModel" [(ngModel)]="last_name"
+          (ngModelChange)="onSuccessSubmit = false" required />
+        <label class="form-control-placeholder semi-bold fs-12" for="last-name">Last Name</label>
+        <div class="error-div text-right position-absolute"
+          *ngIf="(lastName.invalid && (lastName.dirty || lastName.touched))">
+          <label class="error fs-12 semi-bold" *ngIf="lastName.errors?.minlength">Name should be of Minimum 3
+            Characters and Maximum 30 Characters.</label>
+        </div>
+      </div>
+
+      <!-- DOB -->
+      <div class="form-group position-relative">
+        <input class="change-password form-control regular fs-16 light-black bg-white" id="dob" type="text"
+          autocomplete="off" (ngModelChange)="onSuccessSubmit = false" placeholder="yyyy-mm-dd" name="dp"
+          [(ngModel)]="dob" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" [maxDate]="maxDate" readonly/>
+        <label class="form-control-placeholder semi-bold fs-12" (click)="d.toggle()" for="dob">Date of Birth</label>
+       <span *ngIf="dob" (click)="$event.stopPropagation();clearDob()" class="clear-icon position-absolute hand-pointer"></span>
+      </div>
+
+      <!-- email -->
+      <div class="form-group position-relative">
+        <input class="form-control regular fs-16 light-black" placeholder="Enter Email Address"
+          [(ngModel)]="profile_email" id="email-profile" aria-describedby="emailHelp" autocomplete="off"
+          #emailAdmin="ngModel" name="emailAdmin" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+          [ngClass]="{'error-input': emailAdmin.errors?.pattern || emailExists}"
+          (ngModelChange)="onSuccessSubmit = false" required />
+        <label class="form-control-placeholder semi-bold fs-12" for="email-profile">Email</label>
+
+        <div class="error-div position-absolute text-right"
+          *ngIf="(emailAdmin.invalid && (emailAdmin.dirty || emailAdmin.touched)) || emailExists">
+          <label class="error fs-14 semi-bold dark-red" *ngIf="emailAdmin.errors?.pattern">Invalid Email id.</label>
+          <label class="error fs-14 semi-bold dark-red" *ngIf="emailExists">Email id already exists.</label>
+        </div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="form-group position-relative">
+        <input class="form-control regular fs-16 light-black" placeholder="Enter Phone Number" [(ngModel)]="phoneNumber"
+          id="ph-no" aria-describedby="emailHelp" autocomplete="off" #phno="ngModel" name="phno"
+          oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')" (ngModelChange)="onSuccessSubmit = false" required
+          minlength="3" />
+        <label class="form-control-placeholder semi-bold fs-12" for="ph-no">Phone Number</label>
+      </div>
+
+      <!-- Country -->
+      <div class="form-group position-relative country-dropdown">
+        <input class="form-control regular fs-16 light-black" id="country" type="text" placeholder="Ex. India"
+          name="countryName" minlength="2" #countryName="ngModel" [(ngModel)]="country" [ngbTypeahead]="search"
+          (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
+          #instance="ngbTypeahead"
+          (ngModelChange)="onSuccessSubmit = false"/>
+        <label class="form-control-placeholder semi-bold fs-12" for="country">Country</label>
+
+        <div class="error-div text-right position-absolute"
+          *ngIf="countryName.invalid && (countryName.dirty || countryName.touched)">
+          <label class="error fs-12 semi-bold" *ngIf="countryName.errors?.minlength">Company Name should be of Minimum
+            2 Characters</label>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group position-relative">
+        <label class="form-control-placeholder semi-bold fs-12">Gender</label>
+        <div class="radio-button-group d-flex justify-content-left align-items-center pt-4">
+          <mat-radio-group aria-label="Select an option" name="gender" [(ngModel)]="gender">
+            <mat-radio-button value="m">Male</mat-radio-button>
+            <mat-radio-button value="f">Female</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+      </div>
+
+      <!-- update cancel buttons -->
+      <div class="updateCancelButton">
+        <button id="progress-btn" type="submit"
+          class="btn btn-primary login-progress-btn fs-16 bold background-green hand-pointer"
+          [disabled]='!profileDetailsForm.dirty || profileDetailsForm.invalid || onSuccessSubmit'
+          [ngClass]="{'submit-disable': onSuccessSubmit}" data-progress-style="fill-back">
+          <div class="btn-prg text-white fs-16 semi-bold" [ngClass]="{'opacity-5': onSuccessSubmit}">UPDATE</div>
+          <div class="progress"></div>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

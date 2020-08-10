@@ -1,0 +1,67 @@
+<div class="row login-component position-relative">
+  <div class="col-12 col-md-7 login-section">
+    <div class="login-form-section" *ngIf="!loginSection">
+      <h3 class="fs-22 bold">
+        Login to your Account
+      </h3>
+      <div class="login-form">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" autocomplete="off" novalidate>
+          <div class="form-group position-relative">
+            <input type="email" name="email" [(ngModel)]="loginMail" placeholder="Enter Email Address" id="InputEmail"
+              aria-describedby="emailHelp" class="form-control lightsilver-border email fs-16 semi-bold"
+              autocomplete="off" #emaillogin="ngModel" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+              required [ngClass]="{'error-input': emaillogin.errors?.pattern || errorMsgUsername}">
+            <label class="form-control-placeholder d-flex justify-content-between" for="InputEmail"><span>Email
+                Address</span>
+              <span class="error fs-12 semi-bold dark-red"
+                *ngIf="emaillogin.errors?.pattern && !errorMsgUsername">Invalid Email
+                id.</span>
+              <span class="error fs-12 semi-bold dark-red"
+                *ngIf="!emaillogin.errors?.pattern && errorMsgUsername">{{errorMsgUsername}}</span>
+            </label>
+          </div>
+          <div class="form-group position-relative">
+            <div class="form-password-section">
+              <input [ngClass]="{'error-input': errorMsg}" type="password" name="password"
+                placeholder="Password should be of Minimum 8 Characters" [(ngModel)]="loginPassword" id="inputpassword"
+                aria-describedby="emailHelp" class="form-control lightsilver-border password fs-16 semi-bold"
+                autocomplete="off" minlength="8" #passwordlogin="ngModel" (ngModelChange)='errorMsg ?  errorMsg="": ""'
+                required>
+              <!-- [ngClass]="{'error-input': passwordlogin.errors?.minlength}"> -->
+              <label class="form-control-placeholder d-flex justify-content-between"
+                for="inputpassword"><span>Password</span><span *ngIf="errorMsg" class="error fs-12 semi-bold dark-red">
+                  {{errorMsg}}
+                </span></label>
+            </div>
+            <h6 class="fs-14 green semi-bold hand-pointer d-inline-block" (click)="goToRegistration()">Don't have an
+              account yet? Register now.</h6>
+          </div>
+
+          <!-- Progress Bar Button 3 -->
+          <button id="progress-btn" type="submit"
+            class="btn btn-primary login-progress-btn fs-16 bold background-green hand-pointer"
+            [disabled]='!loginForm.valid || verifyForm() || onSuccessSubmit'
+            [ngClass]="{'submit-disable not-allowed': onSuccessSubmit, 'not-allowed':!loginForm.valid || verifyForm()}"
+            data-progress-style="fill-back">
+            <div class="btn-prg text-white fs-16 bold" [ngClass]="{'opacity-5': onSuccessSubmit}">Log in</div>
+            <div class="progress"></div>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="login-form-section forget-password-section" *ngIf="loginSection">
+      <h3 class="fs-14 semi-bold green hand-pointer back-page-button d-inline-block" (click)="backToLoginForm()">
+        <span class="icon-back"></span> Back to Log in
+      </h3>
+      <h3 class="fs-22 bold">
+        Registration
+      </h3>
+      <!-- <div class="login-form"> -->
+      <app-registration></app-registration>
+      <!-- </div> -->
+    </div>
+  </div>
+  <div class="col-md-5 side-image">
+  </div>
+  <!-- </div> -->
+</div>

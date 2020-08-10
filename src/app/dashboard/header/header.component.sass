@@ -1,0 +1,36 @@
+@import "../../../styles.sass"
+
+.dashboard-header
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2)
+  height: 70px
+  margin: 0 -15px
+  z-index: 999
+.profile
+  .profile-icon
+    display: inline-block
+    cursor: pointer
+    border-radius: 50%
+    background-size: 80px 80px
+    text-align: center
+    overflow: hidden
+    position: relative
+    height: 36px
+    width: 36px
+    img
+      height: 27px
+      width: 27px
+      position: absolute
+      top: 56%
+      left: 50%
+      position: absolute
+      transform: translateX(-50%) translateY(-50%) rotate(0.1deg)
+      height: 36px
+      width: 36px
+      border-radius: 50%
+      border: solid #ebebeb 2px
+  .dropdown-menu
+    .dropdown-item
+      &:active
+        background-color: transparent
+      &:focus
+        outline: none
